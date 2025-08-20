@@ -1,0 +1,31 @@
+/* Background of the collapsed menu */
+.navbar-collapse {
+    background-color: #ffffff; /* White background */
+}
+
+/* Links inside collapsed menu */
+.navbar-collapse .nav-link {
+    color: #333333; /* Dark text for visibility */
+    padding: 0.75rem 1rem;
+}
+
+/* Hover effect */
+.navbar-collapse .nav-link:hover {
+    color: #007bff; /* Bootstrap primary color */
+    background-color: #f2f2f2; /* Light grey background */
+}
+
+/* Optional: make sure navbar-toggler icon is visible */
+.navbar-light .navbar-toggler-icon {
+    filter: invert(0.5); /* Adjust visibility if background is light */
+}
+
+
+
+.navbar-nav.ms-auto {
+    text-align: left; /* Align menu items to left in collapsed view */
+}
+
+.navbar-collapse {
+    transition: all 0.3s ease-in-out;
+}
