@@ -16,8 +16,8 @@
 
 ---
 
-
-## 🚀 1. Features
+<h3>
+ <b> 🚀 1. Features </b> 
 
 🔹 **Property Listings Management** – Add, update, or delete property listings with ease.  
 🔹 **User Authentication** – Secure login, signup, and session handling for every user.  
@@ -28,17 +28,8 @@
 🔹 **MVC Architecture** – Organized structure for scalable backend development.  
 🔹 **Database Seeding** – Auto-generate initial property data for testing and demos.
 
----
-
-
-
-## A glimpse into HomiFy  
-<h4>Simplifying property listings with an intuitive interface and seamless user experience. </h4>
-  
----
- <img width="1889" height="1191" alt="image" src="https://github.com/user-attachments/assets/dd2af499-4d4f-4874-8cdc-e3b670f8b6b2" />
-
----
+</h3>
+<br>
 
 ## ⚙️ 2. Tech Stack
 
@@ -110,9 +101,58 @@ HomiFy/
 └── 📄 README.md                    # Project documentation
 </pre>
 
+---
 
+## 🖼️ Application Features & UI Preview
 
+Explore some of **HomiFy’s** powerful and user-friendly features showcased below 👇  
+---
 
+### 🏠 Home Page – Property Showcase  
+A clean and elegant landing page displaying **featured properties** with quick access to details, ratings, and image previews.  
+> ✨ View complete information about each property, including images, price, description, and user reviews.  
+> 💬 Interactive and dynamic — powered by **EJS templates** and **Express routes** for real-time updates.
+ <img width="1889" height="1191" alt="image" src="https://github.com/user-attachments/assets/dd2af499-4d4f-4874-8cdc-e3b670f8b6b2" />
+---
+
+### ➕ Add New Property  
+A simple and intuitive form that allows **registered users** to add their own property listings.  
+Users can upload multiple images, specify pricing, location, and property details — all stored securely in MongoDB.  
+> 🏗️ Integrated with **Cloudinary** for seamless image uploads and storage.
+<img width="1888" height="1006" alt="image" src="https://github.com/user-attachments/assets/d33eb87b-12fa-4897-9458-810d9d9c98df" />
+
+---
+
+### 👤 User Authentication  
+Secure and session-based **Login / Signup** system for personalized access.  
+> 🔐 Managed with **Express-session**, **Passport**, and **Joi** validations to ensure safe user data handling.
+<img width="1901" height="1001" alt="image" src="https://github.com/user-attachments/assets/c2940313-7414-428d-b2fa-57708e118487" />
+
+---
+
+### ⭐ Reviews & Ratings  
+Users can leave feedback, rate properties, and help others make informed decisions.  
+> 💡 Simple and effective review system designed with **nested models** in MongoDB.
+
+---
+
+### ⚙️ Dashboard & Listing Management  
+Manage, edit, or delete your property listings from a user-friendly dashboard.  
+> 📂 Built with reusable EJS components for a consistent experience across all views.
+
+---
+
+### 🚫 Error Handling  
+Custom error pages and smooth navigation for invalid requests or missing data.  
+> 🧱 Uses custom **ExpressError.js** and **wrapAsync.js** utilities to keep the app stable.
+
+---
+
+### 🧰 Responsive Design  
+Fully optimized for all devices — desktop, tablet, and mobile.  
+> 🎨 Built with clean CSS and modular EJS layouts.
+
+✨ *Each screenshot highlights HomiFy’s interactive UI and smooth user experience for property discovery and management.*
 ---
 
 ## 💻 5. Installation Guide
