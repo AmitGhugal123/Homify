@@ -18,7 +18,7 @@ router.delete(
   "/:reviewId",
   isLoggedIn,
   isReviewAuthor,
-  wrapAsync()
+  wrapAsync(reviewController.deleteReview)
 );
 
 module.exports = router;

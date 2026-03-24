@@ -14,6 +14,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const mongoose = require("mongoose");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
@@ -34,6 +36,38 @@ main().catch((err) => console.log("MongoDB connection error:", err));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
+
+// Security Middleware
+app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
+        styleSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net", "fonts.googleapis.com"],
+        fontSrc: ["'self'", "cdnjs.cloudflare.com", "fonts.gstatic.com"],
+        imgSrc: ["'self'", "data:", "https:", "via.placeholder.com", "res.cloudinary.com"],
+    }
+}));
+
+// Rate Limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: "Too many requests from this IP, please try again later.",
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // Limit each IP to 5 login attempts per windowMs
+    message: "Too many login attempts, please try again later.",
+    skipSuccessfulRequests: true,
+});
+
+app.use(limiter); // Apply rate limiting globally
+
+// Body Parser
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
@@ -58,9 +92,10 @@ const sessionConfig = {
     name: "homifySession", 
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false, // Don't create unnecessary sessions for anonymous users
     cookie: {
         httpOnly: true,
+        sameSite: "strict",
         // secure: true, // enable this when using https in production
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
         maxAge: 1000 * 60 * 60 * 24 * 7
@@ -87,7 +122,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.get("/", (req, res) => {
-    res.send("Hi, I am root");
+    res.render("home.ejs");
 });
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);

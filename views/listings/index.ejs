@@ -1,27 +1,115 @@
 <% layout("layouts/boilerplate") %>
-    <body>
-        <h3>All Listings</h3>
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-            <% for(let listing of allListings) { %>
-                <a href="/listings/<%= listing._id %>" class="listing-link">
-                    <div class=" card col listing-card">
-                        <img src="<%= listing.image && listing.image.url ? listing.image.url : 'https://via.placeholder.com/300x200?text=No+Image' %>"
-                            class="card-img-top" alt="Image of <%= listing.title %>" loading="lazy"
-                            onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Broken+Image';"
-                            style=height:20rem; />
 
-                        <div class="card-img-overlay "></div>
-                        <div class="card-body">
-                            <p class="card-text">
-                                <b>
-                                    <%= listing.title %> <br />
-                                </b>
-                                &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-                            </p>
-                        </div>
-                    </div>
-                    <% } %>
-                </a>
+<div class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-2">Discover Amazing Properties</h1>
+    <p class="lead">Find your perfect stay around the world</p>
+    <% if (currUser) { %>
+      <a href="/listings/new" class="btn btn-light btn-lg mt-3">
+        <i class="fa-solid fa-plus me-2"></i>Add Your Listing
+      </a>
+    <% } %>
+  </div>
+</div>
+
+<div class="container my-5">
+  <% if (allListings.length === 0) { %>
+    <div class="text-center py-5">
+      <h3 class="text-muted">No listings found</h3>
+      <p class="text-muted">Be the first to add a listing!</p>
+      <% if (currUser) { %>
+        <a href="/listings/new" class="btn btn-primary">Create Listing</a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="row g-4">
+      <% for(let listing of allListings) { %>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a href="/listings/<%= listing._id %>" class="text-decoration-none">
+            <div class="card h-100 shadow-sm listing-card border-0 transition">
+              <!-- Image Container -->
+              <div class="position-relative overflow-hidden" style="height: 250px;">
+                <img src="<%= listing.image && listing.image.url ? listing.image.url : 'https://via.placeholder.com/400x250?text=No+Image' %>"
+                  class="card-img-top img-fit"
+                  alt="<%= listing.title %>"
+                  loading="lazy"
+                  onerror="this.onerror=null; this.src='https://via.placeholder.com/400x250?text=Broken+Image';"
+                  style="object-fit: cover; height: 100%; width: 100%;" />
+                
+                <!-- Overlay Badge -->
+                <div class="position-absolute top-0 end-0 m-2">
+                  <span class="badge bg-danger">
+                    <i class="fa-solid fa-fire me-1"></i>Popular
+                  </span>
+                </div>
+              </div>
+
+              <!-- Card Body -->
+              <div class="card-body">
+                <h5 class="card-title text-dark fw-bold line-clamp-2">
+                  <%= listing.title %>
+                </h5>
+                
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fa-solid fa-map-pin text-secondary me-1"></i>
+                  <small class="text-muted"><%= listing.location %>, <%= listing.country %></small>
+                </div>
+
+                <p class="card-text text-muted small">
+                  <%= listing.description.substring(0, 60) %>...
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <span class="h5 text-primary fw-bold mb-0">
+                      ₹<%= listing.price.toLocaleString("en-IN") %>
+                    </span>
+                    <small class="text-muted">/night</small>
+                  </div>
+                  <div>
+                    <span class="badge bg-light text-dark">
+                      <i class="fa-solid fa-star text-warning me-1"></i><%= (Math.random() * 2 + 3).toFixed(1) %>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card Footer -->
+              <div class="card-footer bg-light border-top-0">
+                <button class="btn btn-sm btn-outline-primary w-100">
+                  <i class="fa-solid fa-arrow-right me-2"></i>View Details
+                </button>
+              </div>
+            </div>
+          </a>
         </div>
+      <% } %>
+    </div>
+  <% } %>
+</div>
 
-    </body>
+<style>
+  .listing-card {
+    transition: all 0.3s ease;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .img-fit {
+    transition: transform 0.3s ease;
+  }
+
+  .listing-card:hover .img-fit {
+    transform: scale(1.05);
+  }
+</style>

@@ -6,8 +6,9 @@
 ```bash
 Click your cluster → Connect → Drivers.
 
-Copy the “connection string for Node.js” it provides.
 
+Copy the “connection string for Node.js” it provides.
+in compass
 Replace the URI in your .env file with that string.
 
 ```
