@@ -1,154 +1,58 @@
+<% pageClass = "page-auth"; %>
+<% pageTitle = "Sign Up"; %>
 <% layout("/layouts/boilerplate") %>
 
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
-  <div class="row w-100">
-    <div class="col-lg-5 col-md-7 col-sm-9 mx-auto">
-      
-      <!-- Auth Card -->
-      <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
-        <div class="card-body p-5">
-          
-          <!-- Header -->
-          <div class="text-center mb-4">
-            <i class="fa-solid fa-house-chimney" style="font-size: 2.5rem; color: #667eea;"></i>
-            <h1 class="h3 fw-bold mt-3">Create Account</h1>
-            <p class="text-muted">Join Homify and start listing properties</p>
+<section class="page-section auth-wrap">
+  <div class="container">
+    <div class="auth-layout">
+      <aside class="auth-side fade-up">
+        <div class="section-kicker bg-white text-dark">Create your account</div>
+        <h1 class="section-title text-white mb-3">Join Homify and start hosting or saving stays with less friction.</h1>
+        <p class="text-white-50 mb-4">This signup page keeps the focus on the form and makes the onboarding feel more aligned with the rest of the refreshed UI.</p>
+        <div class="d-grid gap-3">
+          <div class="hero-stat">
+            <div class="fw-bold">Host-ready</div>
+            <div class="small text-white-50">Create listings and manage updates from one account.</div>
+          </div>
+          <div class="hero-stat">
+            <div class="fw-bold">Guest-ready</div>
+            <div class="small text-white-50">Save favorite properties and come back to them later.</div>
+          </div>
+        </div>
+      </aside>
+
+      <article class="auth-card shell-card fade-up">
+        <h2 class="h3 mb-2">Sign up</h2>
+        <p class="text-soft mb-4">Create your account to start browsing and hosting with a cleaner workflow.</p>
+
+        <form action="/signup" method="POST" class="needs-validation" novalidate>
+          <div>
+            <label for="username" class="form-label">Username</label>
+            <input name="username" id="username" type="text" class="form-control" placeholder="Choose a username" required>
+            <div class="invalid-feedback">Please provide a username.</div>
           </div>
 
-          <!-- Flash message for errors -->
-          <% if (locals.error && error.length > 0) { %>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              <i class="fa-solid fa-exclamation-circle me-2"></i>
-              <%= error %>
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <div>
+            <label for="email" class="form-label">Email</label>
+            <input name="email" id="email" type="email" class="form-control" placeholder="you@example.com" required>
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+
+          <div>
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+              <input name="password" id="password" type="password" class="form-control" placeholder="At least 6 characters" minlength="6" required>
+              <button type="button" class="btn btn-outline-secondary" data-password-toggle="password" aria-label="Toggle password visibility">
+                <i class="fa-solid fa-eye"></i>
+              </button>
             </div>
-          <% } %>
+            <div class="invalid-feedback">Password must be at least 6 characters.</div>
+          </div>
 
-          <!-- Signup Form -->
-          <form action="/signup" method="POST" class="needs-validation" novalidate>
-
-            <!-- Username -->
-            <div class="mb-3">
-              <label for="username" class="form-label fw-bold">Username</label>
-              <div class="input-group input-group-lg">
-                <span class="input-group-text bg-light border-0">
-                  <i class="fa-solid fa-user text-muted"></i>
-                </span>
-                <input
-                  name="username"
-                  id="username"
-                  type="text"
-                  class="form-control border-0 shadow-sm"
-                  placeholder="Choose a username"
-                  required
-                />
-              </div>
-              <div class="invalid-feedback">
-                Username cannot be empty or contain spaces.
-              </div>
-            </div>
-
-            <!-- Email -->
-            <div class="mb-3">
-              <label for="email" class="form-label fw-bold">Email Address</label>
-              <div class="input-group input-group-lg">
-                <span class="input-group-text bg-light border-0">
-                  <i class="fa-solid fa-envelope text-muted"></i>
-                </span>
-                <input
-                  name="email"
-                  id="email"
-                  type="email"
-                  class="form-control border-0 shadow-sm"
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
-              <div class="invalid-feedback">Please enter a valid email.</div>
-            </div>
-
-            <!-- Password -->
-            <div class="mb-4">
-              <label for="password" class="form-label fw-bold">Password</label>
-              <div class="input-group input-group-lg">
-                <span class="input-group-text bg-light border-0">
-                  <i class="fa-solid fa-lock text-muted"></i>
-                </span>
-                <input
-                  name="password"
-                  id="password"
-                  type="password"
-                  class="form-control border-0 shadow-sm"
-                  placeholder="At least 6 characters"
-                  minlength="6"
-                  required
-                />
-                <button type="button" class="btn btn-outline-secondary border-0" id="togglePassword">
-                  <i class="bi bi-eye"></i>
-                </button>
-              </div>
-              <div class="invalid-feedback">
-                Password must be at least 6 characters.
-              </div>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">
-              <i class="fa-solid fa-user-plus me-2"></i>Create My Account
-            </button>
-
-            <!-- Divider -->
-            <div class="my-4 position-relative">
-              <hr>
-              <span class="position-absolute top-50 start-50 translate-middle bg-white px-2 text-muted small">or</span>
-            </div>
-
-            <!-- Login Link -->
-            <p class="text-center text-muted mb-0">
-              Already have an account? 
-              <a href="/login" class="fw-bold text-decoration-none" style="color: #667eea;">Sign In</a>
-            </p>
-          </form>
-
-        </div>
-      </div>
-
-      <!-- Footer Note -->
-      <p class="text-center text-muted small mt-3">
-        <i class="fa-solid fa-shield-halved me-1"></i>Your information is secure and encrypted.
-      </p>
-
+          <button type="submit" class="btn btn-primary">Create account</button>
+          <p class="mb-0 text-soft">Already have an account? <a href="/login" class="fw-bold">Log in</a></p>
+        </form>
+      </article>
     </div>
   </div>
-</div>
-
-<script>
-  // Show/hide password
-  document.getElementById("togglePassword").addEventListener("click", function () {
-    const passwordInput = document.getElementById("password");
-    const icon = this.querySelector("i");
-
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-      icon.classList.replace("bi-eye", "bi-eye-slash");
-    } else {
-      passwordInput.type = "password";
-      icon.classList.replace("bi-eye-slash", "bi-eye");
-    }
-  });
-
-  // Bootstrap validation
-  (function () {
-    'use strict';
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(function(form) {
-      form.addEventListener('submit', function(event) {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  })();
-</script>
+</section>

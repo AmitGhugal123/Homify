@@ -21,6 +21,7 @@ const User = require("./models/user.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const wishlistRouter = require("./routes/wishlist.js");
 
 // Use your Atlas connection string (stored in .env)
 const dbUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/homify";
@@ -69,6 +70,7 @@ app.use(limiter); // Apply rate limiting globally
 
 // Body Parser
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
@@ -126,6 +128,7 @@ app.get("/", (req, res) => {
 });
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
+app.use("/wishlist", wishlistRouter);
 app.use("/", userRouter);
 
 //  404 handler

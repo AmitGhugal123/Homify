@@ -1,114 +1,73 @@
+<% pageClass = "page-form"; %>
+<% pageTitle = "Edit Listing"; %>
 <% layout("layouts/boilerplate") %>
 
-<div class="py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-  <div class="container">
-    <h1 class="display-4 fw-bold mb-2">Edit Your Listing</h1>
-    <p class="lead">Update property details and photos</p>
-  </div>
-</div>
-
-<div class="container my-5">
-  <div class="row">
-    <div class="col-lg-8 offset-lg-2">
-      <div class="card border-0 shadow-lg">
-        <div class="card-body p-5">
-
-          <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data" novalidate class="needs-validation">
-
-            <!-- Title -->
-            <div class="mb-4">
-              <label for="title" class="form-label fw-bold">Property Title <span class="text-danger">*</span></label>
-              <input name="listing[title]" id="title" type="text" value="<%= listing.title %>" class="form-control form-control-lg" required />
-              <div class="invalid-feedback">Please provide a title.</div>
-            </div>
-
-            <!-- Description -->
-            <div class="mb-4">
-              <label for="description" class="form-label fw-bold">Description <span class="text-danger">*</span></label>
-              <textarea name="listing[description]" id="description" class="form-control form-control-lg" rows="4" required><%= listing.description %></textarea>
-              <small class="text-muted d-block mt-2">Update property description</small>
-              <div class="invalid-feedback">Please provide a description.</div>
-            </div>
-
-            <!-- Current Image Preview -->
-            <div class="mb-4">
-              <label class="form-label fw-bold d-flex align-items-center">Current Image</label>
-              <div class="position-relative" style="max-width: 300px;">
-                <img src="<%= originalImageUrl %>" class="img-fluid rounded-2 shadow-sm" alt="Current listing image" style="max-height: 200px; object-fit: cover;">
-              </div>
-            </div>
-
-            <!-- Replace Image -->
-            <div class="mb-4">
-              <label for="image" class="form-label fw-bold">Replace Image (Optional)</label>
-              <div class="input-group input-group-lg">
-                <input name="image" id="image" type="file" class="form-control" accept="image/*" />
-                <span class="input-group-text">
-                  <i class="fa-solid fa-image"></i>
-                </span>
-              </div>
-              <small class="text-muted d-block mt-2">Leave empty to keep current image</small>
-            </div>
-
-            <!-- Price -->
-            <div class="mb-4">
-              <label for="price" class="form-label fw-bold">Price per Night (₹) <span class="text-danger">*</span></label>
-              <div class="input-group input-group-lg">
-                <span class="input-group-text">₹</span>
-                <input name="listing[price]" id="price" type="number" value="<%= listing.price %>" class="form-control" min="0" required />
-              </div>
-              <div class="invalid-feedback">Please provide a valid price.</div>
-            </div>
-
-            <!-- Location & Country Grid -->
-            <div class="row mb-4">
-              <div class="col-md-6">
-                <label for="location" class="form-label fw-bold">Location <span class="text-danger">*</span></label>
-                <input name="listing[location]" id="location" type="text" value="<%= listing.location %>" class="form-control form-control-lg" required />
-                <div class="invalid-feedback">Please provide a location.</div>
-              </div>
-              <div class="col-md-6">
-                <label for="country" class="form-label fw-bold">Country <span class="text-danger">*</span></label>
-                <input name="listing[country]" id="country" type="text" value="<%= listing.country %>" class="form-control form-control-lg" required />
-                <div class="invalid-feedback">Please provide a country.</div>
-              </div>
-            </div>
-
-            <!-- Buttons -->
-            <div class="row gap-3 mt-5">
-              <div class="col">
-                <button type="submit" class="btn btn-success btn-lg w-100">
-                  <i class="fa-solid fa-save me-2"></i>Save Changes
-                </button>
-              </div>
-              <div class="col">
-                <a href="/listings/<%= listing._id %>" class="btn btn-outline-secondary btn-lg w-100">
-                  <i class="fa-solid fa-arrow-left me-2"></i>Cancel
-                </a>
-              </div>
-            </div>
-
-          </form>
-
-        </div>
-      </div>
+<section class="page-hero">
+  <div class="container form-shell">
+    <div class="page-hero-panel fade-up">
+      <div class="section-kicker bg-white text-dark">Update with confidence</div>
+      <h1 class="section-title text-white mb-2">Edit your listing without fighting the layout.</h1>
+      <p class="mb-0 text-white-50">This version keeps the page calmer and puts the important editing actions first.</p>
     </div>
   </div>
-</div>
+</section>
 
-<script>
-  // Bootstrap form validation
-  (() => {
-    'use strict'
-    const forms = document.querySelectorAll('.needs-validation')
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-        form.classList.add('was-validated')
-      }, false)
-    })
-  })()
-</script>
+<section class="page-section pt-0">
+  <div class="container form-shell d-grid gap-4">
+    <article class="form-card shell-card fade-up">
+      <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data" class="form-grid needs-validation" novalidate>
+        <div>
+          <label for="title" class="form-label">Property title</label>
+          <input name="listing[title]" id="title" type="text" value="<%= listing.title %>" class="form-control" required>
+          <div class="invalid-feedback">Please provide a listing title.</div>
+        </div>
+
+        <div>
+          <label for="description" class="form-label">Description</label>
+          <textarea name="listing[description]" id="description" rows="5" class="form-control" required><%= listing.description %></textarea>
+          <div class="invalid-feedback">Please provide a description.</div>
+        </div>
+
+        <div class="form-grid-2">
+          <div>
+            <label for="price" class="form-label">Price per night</label>
+            <div class="input-group">
+              <span class="input-group-text">&#8377;</span>
+              <input name="listing[price]" id="price" type="number" value="<%= listing.price %>" class="form-control" min="0" required>
+            </div>
+            <div class="invalid-feedback">Please provide a valid price.</div>
+          </div>
+          <div>
+            <label for="image" class="form-label">Replace image</label>
+            <input name="image" id="image" type="file" class="form-control" accept="image/*">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div>
+            <label for="location" class="form-label">Location</label>
+            <input name="listing[location]" id="location" type="text" value="<%= listing.location %>" class="form-control" required>
+            <div class="invalid-feedback">Please provide a location.</div>
+          </div>
+          <div>
+            <label for="country" class="form-label">Country</label>
+            <input name="listing[country]" id="country" type="text" value="<%= listing.country %>" class="form-control" required>
+            <div class="invalid-feedback">Please provide a country.</div>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap pt-2">
+          <button type="submit" class="btn btn-primary px-4">Save changes</button>
+          <a href="/listings/<%= listing._id %>" class="btn btn-outline-secondary px-4">Cancel</a>
+        </div>
+      </form>
+    </article>
+
+    <article class="detail-card fade-up">
+      <h2 class="h5 mb-3">Current image</h2>
+      <div class="detail-image-wrap" style="min-height: 280px; height: 280px;">
+        <img src="<%= originalImageUrl %>" alt="Current listing image">
+      </div>
+    </article>
+  </div>
+</section>

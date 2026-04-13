@@ -5,8 +5,36 @@ const { cloudinary } = require("../utils/cloudConfig");
 
 // Index route
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", { allListings });
+    const search = req.query.search || null;
+    const minPrice = Number(req.query.minPrice);
+    const maxPrice = Number(req.query.maxPrice);
+    const query = {};
+
+    if (search) {
+        const searchRegex = new RegExp(search, "i");
+        query.$or = [
+            { title: searchRegex },
+            { location: searchRegex },
+            { country: searchRegex },
+            { description: searchRegex }
+        ];
+    }
+
+    if (Number.isFinite(minPrice) || Number.isFinite(maxPrice)) {
+        query.price = {};
+
+        if (Number.isFinite(minPrice)) {
+            query.price.$gte = minPrice;
+        }
+
+        if (Number.isFinite(maxPrice)) {
+            query.price.$lte = maxPrice;
+        }
+    }
+
+    const allListings = await Listing.find(query);
+
+    res.render("listings/index.ejs", { allListings, search });
 };
 
 // New Route
@@ -59,8 +87,10 @@ module.exports.editListing = async (req, res) => {
         req.flash("error", "Listing not found!");
         return res.redirect("/listings");
     }
-    let originalImageUrl = listing.image.url;
-    originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
+    let originalImageUrl = listing.image?.url || "https://via.placeholder.com/800x600?text=No+Image";
+    if (listing.image?.url) {
+        originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_700");
+    }
     res.render("listings/edit", { listing, originalImageUrl });
 };
 

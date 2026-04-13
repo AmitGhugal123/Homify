@@ -1,114 +1,197 @@
+<% pageClass = "page-home"; %>
+<% pageTitle = "Home"; %>
 <% layout("layouts/boilerplate") %>
 
-<section class="hero-home py-5 py-lg-6">
+<section class="page-section">
   <div class="container">
-    <div class="row align-items-center g-4">
-      <div class="col-lg-7">
-        <span class="badge bg-light text-dark mb-3 px-3 py-2">
-          <i class="fa-solid fa-house-chimney me-2 text-warning"></i>Welcome to Homify
-        </span>
-        <h1 class="display-4 fw-bold text-white mb-3">
-          Find your next stay with comfort and confidence
-        </h1>
-        <p class="lead text-white-50 mb-4">
-          Explore handpicked listings, transparent pricing, and real reviews from travelers.
-          You will be redirected to listings automatically.
-        </p>
+    <div class="hero-grid">
+      <section class="hero-panel fade-up">
+        <div class="section-kicker">
+          <i class="fa-solid fa-sparkles"></i>
+          Better stays, less noise
+        </div>
+        <div class="hero-copy">
+          <h1 class="hero-title">Find your next stay with more clarity and less clutter.</h1>
+          <p class="hero-subtitle">Homify is being reshaped into a calmer booking experience: clearer discovery, stronger trust signals, and a cleaner path for both guests and hosts.</p>
+        </div>
 
-        <div class="d-flex flex-wrap gap-2 mb-4">
-          <a href="/listings" class="btn btn-light btn-lg px-4">
-            <i class="fa-solid fa-compass me-2"></i>Explore Listings Now
-          </a>
+        <form action="/listings" method="GET" class="hero-search">
+          <div class="hero-search-field">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="search" placeholder="Search by city, country, or property mood" value="<%= typeof search !== 'undefined' ? search : '' %>">
+          </div>
+          <button class="btn btn-light px-4" type="submit">
+            <i class="fa-solid fa-arrow-right me-2"></i>Start exploring
+          </button>
+        </form>
+
+        <div class="hero-actions mt-3">
+          <a href="/listings" class="btn btn-light px-4">Browse listings</a>
           <% if (!currUser) { %>
-            <a href="/signup" class="btn btn-outline-light btn-lg px-4">
-              <i class="fa-solid fa-user-plus me-2"></i>Create Account
-            </a>
+            <a href="/signup" class="btn btn-outline-light px-4">Create account</a>
           <% } else { %>
-            <a href="/listings/new" class="btn btn-outline-light btn-lg px-4">
-              <i class="fa-solid fa-plus me-2"></i>Add New Listing
-            </a>
+            <a href="/listings/new" class="btn btn-outline-light px-4">List your property</a>
           <% } %>
         </div>
 
-        <div class="text-white-50 small mb-2">Redirecting to listings in <span id="countdown">6</span>s...</div>
-        <div class="progress home-progress" role="progressbar" aria-label="Redirect progress" aria-valuemin="0" aria-valuemax="100">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" id="redirectBar" style="width: 0%"></div>
-        </div>
-      </div>
-
-      <div class="col-lg-5">
-        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-          <div class="card-body p-4 p-lg-5">
-            <h5 class="fw-bold mb-3">Why users love Homify</h5>
-            <ul class="list-unstyled mb-0">
-              <li class="mb-3 d-flex align-items-start">
-                <i class="fa-solid fa-circle-check text-success me-2 mt-1"></i>
-                Verified user reviews and trusted hosts
-              </li>
-              <li class="mb-3 d-flex align-items-start">
-                <i class="fa-solid fa-circle-check text-success me-2 mt-1"></i>
-                Fast search experience with clear pricing
-              </li>
-              <li class="mb-0 d-flex align-items-start">
-                <i class="fa-solid fa-circle-check text-success me-2 mt-1"></i>
-                Easy listing creation for property owners
-              </li>
-            </ul>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="fw-bold fs-4">5000+</div>
+            <div class="small text-white-50">Places to compare</div>
+          </div>
+          <div class="hero-stat">
+            <div class="fw-bold fs-4">50K+</div>
+            <div class="small text-white-50">Travelers served</div>
+          </div>
+          <div class="hero-stat">
+            <div class="fw-bold fs-4">4.9/5</div>
+            <div class="small text-white-50">Guest satisfaction target</div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <aside class="hero-side-card shell-card fade-up">
+        <div class="hero-highlight">
+          <div class="hero-highlight-image">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Warm and modern interior">
+          </div>
+          <div class="d-flex justify-content-between align-items-start gap-3">
+            <div>
+              <div class="text-soft small mb-1">Featured direction</div>
+              <h2 class="h4 mb-2">A cleaner experience for browsing, saving, and hosting.</h2>
+              <p class="supporting-copy mb-0">Less filler. Better hierarchy. Stronger pricing and trust cues.</p>
+            </div>
+            <span class="icon-chip">
+              <i class="fa-solid fa-house"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="d-flex align-items-start gap-3">
+            <span class="icon-chip"><i class="fa-solid fa-circle-check"></i></span>
+            <div>
+              <h3 class="h5 mb-2">What we are improving</h3>
+              <p class="supporting-copy mb-0">Stronger page structure, better spacing, fewer distracting effects, and a clearer sense of what matters on each screen.</p>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
 
-<style>
-  .hero-home {
-    min-height: calc(100vh - 220px);
-    display: flex;
-    align-items: center;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 50%),
-      linear-gradient(135deg, #1f2937 0%, #334155 40%, #0f766e 100%);
-  }
+<section class="page-section">
+  <div class="container">
+    <div class="section-heading fade-up">
+      <span class="section-kicker">Why it feels better</span>
+      <h2 class="section-title">The homepage now points people somewhere useful instead of just decorating the screen.</h2>
+      <p class="section-copy">This direction keeps the visual energy, but gives the page a stronger purpose: search, browse, compare, and host.</p>
+    </div>
 
-  .home-progress {
-    max-width: 420px;
-    height: 0.7rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.2);
-  }
+    <div class="home-metrics-grid">
+      <article class="stat-card fade-up">
+        <div class="metric">
+          <div class="metric-value">150+</div>
+          <div class="metric-label">Countries represented in destination coverage</div>
+        </div>
+      </article>
+      <article class="stat-card fade-up">
+        <div class="metric">
+          <div class="metric-value">24/7</div>
+          <div class="metric-label">Support mindset for guests and hosts</div>
+        </div>
+      </article>
+      <article class="stat-card fade-up">
+        <div class="metric">
+          <div class="metric-value">Easy</div>
+          <div class="metric-label">Cleaner listing creation flow for hosts</div>
+        </div>
+      </article>
+      <article class="stat-card fade-up">
+        <div class="metric">
+          <div class="metric-value">Clear</div>
+          <div class="metric-label">Stronger hierarchy for pricing and trust</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
-  .home-progress .progress-bar {
-    background: linear-gradient(90deg, #f59e0b, #f97316);
-  }
+<section class="page-section">
+  <div class="container">
+    <div class="section-heading fade-up">
+      <span class="section-kicker">How it works</span>
+      <h2 class="section-title">Three simple steps, now with less visual noise.</h2>
+    </div>
 
-  @media (max-width: 768px) {
-    .hero-home {
-      min-height: auto;
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-    }
-  }
-</style>
+    <div class="benefit-grid">
+      <article class="benefit-card shell-card fade-up">
+        <span class="icon-chip mb-3"><i class="fa-solid fa-search"></i></span>
+        <h3 class="h4">Search with intent</h3>
+        <p class="mb-0">Find places by destination, budget, or the kind of stay you want instead of digging through cluttered cards.</p>
+      </article>
+      <article class="benefit-card shell-card fade-up">
+        <span class="icon-chip mb-3"><i class="fa-solid fa-heart"></i></span>
+        <h3 class="h4">Save what fits</h3>
+        <p class="mb-0">Wishlist the places that match your trip and come back to them quickly without losing context.</p>
+      </article>
+      <article class="benefit-card shell-card fade-up">
+        <span class="icon-chip mb-3"><i class="fa-solid fa-key"></i></span>
+        <h3 class="h4">Book with confidence</h3>
+        <p class="mb-0">Clearer pricing, better host visibility, and more grounded reviews help people commit faster.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-<script>
-  (function redirectToListings() {
-    var seconds = 6;
-    var countdownEl = document.getElementById("countdown");
-    var barEl = document.getElementById("redirectBar");
-    var total = seconds;
+<section class="page-section">
+  <div class="container">
+    <div class="section-heading fade-up">
+      <span class="section-kicker">Guest feedback</span>
+      <h2 class="section-title">The experience should feel helpful, not overloaded.</h2>
+    </div>
 
-    var timer = setInterval(function () {
-      seconds -= 1;
-      if (countdownEl) countdownEl.textContent = String(Math.max(seconds, 0));
-
-      var progress = ((total - seconds) / total) * 100;
-      if (barEl) barEl.style.width = progress + "%";
-
-      if (seconds <= 0) {
-        clearInterval(timer);
-        window.location.href = "/listings";
-      }
-    }, 1000);
-  })();
-</script>
+    <div class="testimonial-grid">
+      <article class="testimonial-card shell-card fade-up">
+        <div class="review-stars mb-3">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="mb-0">"I can tell what matters faster now. The search, cards, and pricing all feel easier to trust."</p>
+        <div class="testimonial-meta">
+          <img src="https://api.dicebear.com/7.x/thumbs/svg?seed=sarah" alt="Sarah" class="testimonial-avatar">
+          <div>
+            <div class="fw-bold">Sarah Johnson</div>
+            <div class="text-soft small">Frequent traveler</div>
+          </div>
+        </div>
+      </article>
+      <article class="testimonial-card shell-card fade-up">
+        <div class="review-stars mb-3">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="mb-0">"Hosting feels more professional when the platform itself looks organized and intentional."</p>
+        <div class="testimonial-meta">
+          <img src="https://api.dicebear.com/7.x/thumbs/svg?seed=mike" alt="Mike" class="testimonial-avatar">
+          <div>
+            <div class="fw-bold">Mike Chen</div>
+            <div class="text-soft small">Property host</div>
+          </div>
+        </div>
+      </article>
+      <article class="testimonial-card shell-card fade-up">
+        <div class="review-stars mb-3">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="mb-0">"It no longer feels like every element is shouting. That alone makes browsing better."</p>
+        <div class="testimonial-meta">
+          <img src="https://api.dicebear.com/7.x/thumbs/svg?seed=emma" alt="Emma" class="testimonial-avatar">
+          <div>
+            <div class="fw-bold">Emma Williams</div>
+            <div class="text-soft small">Remote worker</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

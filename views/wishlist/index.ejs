@@ -1,0 +1,43 @@
+<% pageClass = "page-listings"; %>
+<% pageTitle = "Wishlist"; %>
+<% layout("layouts/boilerplate") %>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-panel fade-up">
+      <div class="section-kicker bg-white text-dark">
+        <i class="fa-solid fa-heart"></i>
+        Saved stays
+      </div>
+      <h1 class="section-title text-white mb-2">Your wishlist keeps the best options within reach.</h1>
+      <p class="mb-0 text-white-50">Use this space to compare the places you want to revisit before making a final choice.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="container">
+    <div class="wishlist-layout">
+      <div id="wishlistContainer" class="fade-up">
+        <div class="shell-card empty-state">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading</span>
+          </div>
+          <p class="text-soft mt-3 mb-0">Loading your saved listings...</p>
+        </div>
+      </div>
+
+      <aside class="wishlist-summary shell-card fade-up">
+        <h2 class="h5 mb-3">Wishlist summary</h2>
+        <div class="metric mb-4">
+          <div class="metric-value" id="totalItems">0</div>
+          <div class="metric-label">Saved properties</div>
+        </div>
+        <p class="text-soft mb-4">Saving listings here gives you a quicker shortlist when you are comparing locations, prices, and descriptions.</p>
+        <a href="/listings" class="btn btn-primary w-100">Continue browsing</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script src="/js/wishlist-page.js"></script>
