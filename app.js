@@ -131,6 +131,19 @@ app.use((req, res, next) => {
     next();
 });
 
+// Health check endpoint for Render monitoring
+app.get("/health", (req, res) => {
+    // Check MongoDB connection
+    const isDbConnected = mongoose.connection.readyState === 1;
+    const status = isDbConnected ? 200 : 503;
+    res.status(status).json({
+        status: isDbConnected ? "healthy" : "unhealthy",
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        database: isDbConnected ? "connected" : "disconnected"
+    });
+});
+
 // Routes
 app.get("/", (req, res) => {
     res.render("home.ejs");
@@ -147,12 +160,43 @@ app.use((req, res, next) => {
 
 //  Global error handler
 app.use((err, req, res, next) => {
-    console.error("ERROR CAUGHT:", err);
     const { statusCode = 500, message = "Something went wrong!" } = err;
+    if (statusCode >= 500) {
+        console.error("ERROR CAUGHT:", err);
+    }
     res.status(statusCode).render("error.ejs", { err });
 });
 
 // Server start
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
+});
+
+// Graceful shutdown for clean restarts (important for Render)
+process.on("SIGTERM", () => {
+    console.log("SIGTERM signal received: closing HTTP server");
+    server.close(async () => {
+        console.log("HTTP server closed");
+        try {
+            await mongoose.disconnect();
+            console.log("MongoDB disconnected");
+        } catch (err) {
+            console.error("Error disconnecting MongoDB:", err);
+        }
+        process.exit(0);
+    });
+});
+
+process.on("SIGINT", () => {
+    console.log("SIGINT signal received: closing HTTP server");
+    server.close(async () => {
+        console.log("HTTP server closed");
+        try {
+            await mongoose.disconnect();
+            console.log("MongoDB disconnected");
+        } catch (err) {
+            console.error("Error disconnecting MongoDB:", err);
+        }
+        process.exit(0);
+    });
 });
