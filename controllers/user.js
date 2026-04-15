@@ -57,3 +57,8 @@ module.exports.logout = (req, res, next) => {
         res.redirect("/listings");
     });
 }
+
+module.exports.renderAdminDashboard = async (req, res) => {
+    const users = await User.find({}).sort({ createdAt: -1, username: 1 });
+    res.render("admin/index.ejs", { users });
+};

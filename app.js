@@ -128,6 +128,7 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
+    res.locals.isAdmin = Boolean(req.user && (req.user.isAdmin || (process.env.ADMIN_EMAIL && req.user.email === process.env.ADMIN_EMAIL)));
     next();
 });
 

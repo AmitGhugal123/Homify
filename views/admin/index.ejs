@@ -1,0 +1,72 @@
+<% pageClass = "page-admin"; %>
+<% pageTitle = "Admin Dashboard"; %>
+<% layout("/layouts/boilerplate") %>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-panel fade-up">
+      <div class="section-kicker bg-white text-dark">
+        <i class="fa-solid fa-shield-halved"></i>
+        Admin access
+      </div>
+      <h1 class="section-title text-white mb-2">User accounts overview</h1>
+      <p class="mb-0 text-white-50">This page is restricted to admin users only. Passwords are never displayed because they are hashed and not recoverable.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="container">
+    <div class="shell-card fade-up">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <div>
+          <h2 class="h4 mb-1">Registered users</h2>
+          <p class="text-soft mb-0"><%= users.length %> total account<%= users.length !== 1 ? "s" : "" %>.</p>
+        </div>
+        <span class="badge bg-primary-subtle text-primary-emphasis">Admin only</span>
+      </div>
+
+      <% if (users.length === 0) { %>
+        <div class="empty-state text-center py-5">
+          <div class="empty-state-icon mx-auto">
+            <i class="fa-solid fa-users-slash"></i>
+          </div>
+          <h3 class="h5 mt-3 mb-2">No users found</h3>
+          <p class="text-soft mb-0">Once users sign up, their account details will appear here.</p>
+        </div>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Password</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach((user) => { %>
+                <tr>
+                  <td><strong><%= user.username %></strong></td>
+                  <td><%= user.email %></td>
+                  <td>
+                    <% if (user.isAdmin) { %>
+                      <span class="badge text-bg-danger">Admin</span>
+                    <% } else { %>
+                      <span class="badge text-bg-secondary">User</span>
+                    <% } %>
+                  </td>
+                  <td>
+                    <span class="text-soft">Hidden</span>
+                    <small class="d-block text-soft">Passwords are hashed and not viewable.</small>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>

@@ -88,6 +88,10 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_KEY=your_api_key
 CLOUDINARY_SECRET=your_api_secret
 
+# Admin access (optional)
+# Set this to your own email to unlock the admin dashboard
+ADMIN_EMAIL=your_admin_email@example.com
+
 # Server
 NODE_ENV=development
 PORT=8080
@@ -204,6 +208,7 @@ homify/
 - `POST /signup` - User registration
 - `POST /login` - User login
 - `GET /logout` - User logout
+- `GET /admin` - Admin-only user dashboard
 
 ### Wishlist
 - `GET /wishlist` - View saved listings
@@ -257,6 +262,16 @@ homify/
 ---
 
 ## 📚 Documentation
+
+### Admin dashboard
+
+Homify includes an admin-only dashboard at `/admin` that shows:
+- username
+- email
+- role
+- password status as hidden/hashed
+
+To enable it, set `ADMIN_EMAIL` to the email address of the account you want to treat as admin. The dashboard is protected by middleware and will return a 403 for non-admin users.
 
 Comprehensive documentation available in `docs/core/`:
 

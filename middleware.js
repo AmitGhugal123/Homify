@@ -12,6 +12,26 @@ module.exports.isLoggedIn = (req, res, next) => {
     next();
 };
 
+module.exports.isAdmin = async (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.session.redirectUrl = req.originalUrl;
+        req.flash("error", "You must be logged in as an admin to access that page.");
+        return res.redirect("/login");
+    }
+
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const userIsAdmin = Boolean(req.user && (req.user.isAdmin || (adminEmail && req.user.email === adminEmail)));
+
+    if (!userIsAdmin) {
+        req.flash("error", "You do not have admin access.");
+        return res.status(403).render("error.ejs", {
+            err: new ExpressError(403, "Admin access required.")
+        });
+    }
+
+    next();
+};
+
 //purpose : to newListing > first login > redirect: newlisting 
 // reason : the passport delete the redirectUrl: undefine
 

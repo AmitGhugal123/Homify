@@ -4,7 +4,7 @@ const passport = require("passport");
 const rateLimit = require("express-rate-limit");
 const User = require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync.js");
-const { saveRedirectUrl } = require("../middleware.js");
+const { saveRedirectUrl, isAdmin } = require("../middleware.js");
 const userController = require("../controllers/user.js")
 
 // Auth Limiter - 5 attempts per 15 minutes
@@ -34,6 +34,9 @@ router.route("/login")
 
 // LOGOUT Route
 router.get("/logout", userController.logout);
+
+// Admin dashboard
+router.get("/admin", isAdmin, wrapAsync(userController.renderAdminDashboard));
 
 // Privacy Policy Route
 router.get("/privacy", (req, res) => {
