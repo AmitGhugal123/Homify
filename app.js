@@ -23,6 +23,10 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const wishlistRouter = require("./routes/wishlist.js");
 
+const PORT = process.env.PORT || 8080;
+const isProduction = process.env.NODE_ENV === "production";
+const sessionSecret = process.env.SESSION_SECRET || "dev-fallback-secret-change-me";
+
 // Use your Atlas connection string (stored in .env)
 const dbUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/homify";
 
@@ -37,6 +41,11 @@ main().catch((err) => console.log("MongoDB connection error:", err));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
+
+if (isProduction) {
+    // Required for secure cookies behind managed proxies (Render/Railway/etc.)
+    app.set("trust proxy", 1);
+}
 
 // Security Middleware
 app.use(helmet());
@@ -79,7 +88,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
-        secret: process.env.SESSION_SECRET,
+        secret: sessionSecret,
     },
     touchAfter: 24 * 60 * 60 // time period in seconds (update session once per day)
 });
@@ -92,13 +101,13 @@ store.on("error", function (e) {
 const sessionConfig = {
     store,
     name: "homifySession", 
-    secret: process.env.SESSION_SECRET,
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false, // Don't create unnecessary sessions for anonymous users
     cookie: {
         httpOnly: true,
-        sameSite: "strict",
-        // secure: true, // enable this when using https in production
+        sameSite: isProduction ? "lax" : "strict",
+        secure: isProduction,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -144,6 +153,6 @@ app.use((err, req, res, next) => {
 });
 
 // Server start
-app.listen(8080, () => {
-    console.log("Server is listening on port 8080");
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
