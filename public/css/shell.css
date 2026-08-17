@@ -196,6 +196,7 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   border-radius: 50%;
   background: color-mix(in srgb, var(--color-surface) 6%, transparent);
   z-index: 0;
+  pointer-events: none; /* never intercept clicks */
 }
  
 .site-footer::after {
@@ -207,6 +208,7 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   border-radius: 50%;
   background: color-mix(in srgb, var(--color-amber) 16%, transparent 84%);
   z-index: 0;
+  pointer-events: none; /* decorative only */
 }
  
 /* Links and text inside footer should be theme-aware */
@@ -244,15 +246,20 @@ html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
 .footer-title {
   color: var(--color-brand-deep);
 }
- 
+
 /* Footer socials */
 .footer-social {
   background: color-mix(in srgb, var(--color-surface) 8%, transparent);
-  color: var(--color-text-muted);
+  color: var(--btn-primary-color);
 }
+.footer-social i { color: var(--btn-primary-color); }
 .footer-social:hover {
-  color: var(--color-brand);
+  color: var(--color-mint);
+  background: color-mix(in srgb, var(--color-surface) 12%, transparent);
 }
+
+/* Footer bottom separator */
+.site-footer .border-top { border-color: rgba(242,247,245,0.12) !important; }
  
 /* Footer metric descriptions */
 .footer-metric {
@@ -318,34 +325,49 @@ html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
 }
 
 .footer-metric {
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.08);
+  background: #12383C; /* elevated teal surface for contrast */
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 88px;
 }
 
+.footer-metric .fw-bold { color: var(--color-text); font-weight: 800; }
+.footer-metric .text-white-50 { color: var(--color-text-muted) !important; }
+
+/* Back to top button: fixed above all content and decorative elements */
 .back-to-top {
   position: fixed;
-  right: 1.25rem;
-  bottom: 1.25rem;
-  width: 3rem;
-  height: 3rem;
+  right: 24px;
+  bottom: 24px;
+  width: 52px;
+  height: 52px;
   border: 0;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, var(--color-coral), color-mix(in srgb, var(--color-amber) 40%, transparent 60%));
-  color: var(--btn-primary-color);
+  background: linear-gradient(135deg, var(--color-coral), color-mix(in srgb, var(--color-amber) 36%, transparent 64%));
+  color: #ffffff;
   box-shadow: var(--shadow-md);
   opacity: 0;
   pointer-events: none;
   transform: translateY(10px);
-  transition: opacity 220ms ease, transform 220ms ease;
+  transition: opacity 220ms ease, transform 220ms ease, box-shadow 160ms ease;
+  z-index: 9999; /* ensure it's above footer decorations and content */
 }
+
+.back-to-top i { color: #fff; font-size: 0.95rem; }
 
 .back-to-top.is-visible {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .back-to-top { right: 16px; bottom: 16px; width: 50px; height: 50px; }
 }
 
 @media (max-width: 991px) {
