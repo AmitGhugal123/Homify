@@ -2,11 +2,27 @@
   position: sticky;
   top: 0;
   z-index: 1030;
-  padding: 1rem 0;
+  height: 76px;
   transition: background-color 220ms ease, box-shadow 220ms ease, backdrop-filter 220ms ease, border-color 220ms ease;
   background: var(--color-surface);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid var(--color-border);
+}
+/* Make navbar container a true horizontal layout with proper padding */
+.site-navbar > .container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+/* Ensure overall page container respects max width and padding */
+.site-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .site-navbar.is-scrolled {
@@ -61,6 +77,14 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
 .site-navbar .navbar-collapse {
   gap: 1rem;
 }
+/* Make nav items occupy only their content width and keep layout stable */
+.site-navbar .navbar-nav { display: flex; align-items: center; gap: 0.5rem; flex: 0 0 auto; }
+.site-navbar .nav-link { white-space: nowrap; }
+.site-navbar .nav-control { background: color-mix(in srgb, var(--color-surface) 94%, transparent); border: 1px solid var(--border); padding: 0.45rem 0.8rem; }
+.site-navbar .nav-control i { margin-right: 0.35rem; }
+/* Auth buttons */
+.site-navbar .nav-link[href*="/signup"] { background: linear-gradient(135deg, var(--color-brand), var(--color-brand-deep)); color: var(--btn-primary-color) !important; border-radius: 12px; padding: 0.5rem 0.9rem !important; }
+.site-navbar .nav-link[href*="/login"] { border: 1px solid var(--border); border-radius: 12px; padding: 0.45rem 0.8rem !important; }
 
 .site-navbar .nav-link,
 .site-navbar .nav-control {
@@ -107,13 +131,17 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  min-width: min(100%, 320px);
-  padding: 0.4rem 0.5rem 0.4rem 1rem;
+  flex: 1 1 420px;
+  max-width: 720px;
+  padding: 0.4rem 0.6rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--color-surface) 84%, transparent);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
 }
+.site-search input { padding: 0.45rem 0.5rem; }
+.site-search i { color: var(--color-text-muted); }
+.site-search button { flex: 0 0 auto; }
 
 .site-search input {
   flex: 1;
@@ -146,14 +174,17 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
 }
 
 .site-footer {
-  /* Make footer theme-aware: default to light/surface + dark text in light mode */
+  /* Footer uses a deep branded surface to create separation */
   position: relative;
   overflow: hidden;
   margin-top: 4rem;
   padding: 4rem 0 2rem;
-  background: var(--color-surface);
-  color: var(--color-text);
+  background: var(--color-brand-deep);
+  color: var(--btn-primary-color);
+  border-top: 1px solid color-mix(in srgb, var(--btn-primary-color) 6%, transparent);
 }
+/* Footer content container */
+.site-footer .footer-panel { max-width: 1280px; margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px; }
  
 /* Decorative shapes stay subtle and behind content */
 .site-footer::before {
@@ -180,11 +211,11 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
  
 /* Links and text inside footer should be theme-aware */
 .site-footer a {
-  color: var(--color-text);
+  color: var(--btn-primary-color);
 }
  
 .site-footer a:hover {
-  color: var(--color-brand);
+  color: var(--color-mint);
 }
  
 /* Replace Bootstrap's text-white-50 inside footer with a readable muted token */
@@ -253,7 +284,7 @@ html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(238, 244, 248, 0.62);
+  color: var(--btn-primary-color);
 }
 
 .footer-link-list {
@@ -334,4 +365,7 @@ html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
   .footer-metrics {
     grid-template-columns: 1fr;
   }
+
+  .navbar-toggler { min-width: 44px; min-height: 44px; padding: 0.45rem; border-radius: 8px; }
+  .navbar-toggler-icon { width: 20px; height: 14px; }
 }

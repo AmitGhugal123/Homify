@@ -49,6 +49,8 @@ html[data-theme="dark"] {
 html,
 body {
   min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* safety: prevent page-level horizontal scrolling while root causes are fixed */
 }
 
 body {
