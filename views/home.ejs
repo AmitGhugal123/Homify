@@ -2,64 +2,120 @@
 <% pageTitle = "Home"; %>
 <% layout("layouts/boilerplate") %>
 
-<section class="page-section page-home-intro">
+<section class="page-hero page-section">
   <div class="container">
-    <div class="intro-copy fade-up">
-      <h1 class="editorial-title">The homepage now points people somewhere useful instead of just decorating the screen.</h1>
-      <p class="editorial-subtitle">This direction keeps the visual energy, but gives the page a stronger purpose: search, browse, compare, and host.</p>
+    <div class="page-hero-panel fade-up">
+      <div class="section-kicker bg-white text-dark">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Find your next stay
+      </div>
+      <h1 class="section-title text-white mb-2">Find a place that feels right.</h1>
+      <p class="text-soft mb-3">Discover stays by location, price, amenities, and what matters to you.</p>
+
+      <form action="/listings" method="GET" class="d-flex gap-2" role="search">
+        <input type="text" name="search" class="form-control" placeholder="Where are you looking? City, area or keyword">
+        <button class="btn btn-primary" type="submit">Search</button>
+        <a href="/listings" class="btn btn-outline-light ms-2">Explore stays →</a>
+      </form>
     </div>
   </div>
 </section>
 
-<section class="page-section home-hero-top">
+<section class="page-section">
   <div class="container">
-    <div class="quote-card fade-up">
-      <div class="quote-card-inner">
-        <div class="quote-text">"It no longer feels like every element is shouting. That alone makes browsing better."</div>
-        <div class="quote-author-row">
-          <div class="quote-avatar">
-            <div class="quote-avatar-inner">🙂</div>
-          </div>
-          <div class="quote-author-meta">
-            <h2>Emma Williams</h2>
-            <p>Remote worker</p>
-          </div>
-        </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h2 class="h4 mb-1">Places worth exploring</h2>
+        <p class="text-soft mb-0">A few stays to get you started.</p>
+      </div>
+      <a href="/listings" class="btn btn-outline-primary">Explore all stays →</a>
+    </div>
+
+    <% if (featuredListings && featuredListings.length > 0) { %>
+      <div class="listing-grid fade-up">
+        <% for (let listing of featuredListings) { %>
+          <article class="listing-card">
+            <div class="listing-media">
+              <img src="<%= listing.image && listing.image.url ? listing.image.url : 'https://via.placeholder.com/800x600?text=No+Image' %>" alt="<%= listing.title %>" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x600?text=Image+Unavailable';">
+              <button class="wishlist-btn" data-listing-id="<%= listing._id %>" aria-label="Toggle wishlist"><i class="fa-regular fa-heart"></i></button>
+              <div class="listing-badge"><i class="fa-solid fa-location-dot"></i><span><%= listing.location %></span></div>
+            </div>
+            <div class="listing-card-body">
+              <div class="listing-topline mb-2">
+                <a href="/listings/<%= listing._id %>"><h3 class="h5 mb-0"><%= listing.title %></h3></a>
+                <span class="price-tag"><span class="currency">&#8377;</span><%= listing.price ? listing.price.toLocaleString('en-IN') : '-' %></span>
+              </div>
+              <div class="listing-meta-row mb-3">
+                <span><i class="fa-solid fa-earth-asia me-1"></i><%= listing.country || '' %></span>
+                <span><i class="fa-solid fa-receipt me-1"></i>Per night</span>
+              </div>
+              <p class="listing-description mb-3"><%= listing.description ? (listing.description.length > 110 ? `${listing.description.substring(0,110)}...` : listing.description) : '' %></p>
+              <div class="listing-footer-row">
+                <span class="text-soft"><i class="fa-solid fa-circle-check me-1 text-success"></i>Trusted host flow</span>
+                <a href="/listings/<%= listing._id %>" class="btn btn-outline-primary btn-sm">View stay</a>
+              </div>
+            </div>
+          </article>
+        <% } %>
+      </div>
+    <% } else { %>
+      <div class="shell-card empty-state fade-up">
+        <div class="empty-state-icon"><i class="fa-solid fa-house-chimney"></i></div>
+        <h3 class="h4">Stays are coming together</h3>
+        <p class="text-soft mb-4">No featured stays are available right now. Browse all listings to discover what's available.</p>
+        <a href="/listings" class="btn btn-primary">Explore listings</a>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="container">
+    <h2 class="h5 mb-3">Explore by location</h2>
+    <p class="text-soft mb-3">Start with a place you already have in mind.</p>
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <% if (locations && locations.length) { %>
+        <% for (let loc of locations) { %>
+          <a class="btn btn-sm btn-outline-secondary" href="/listings?search=<%= encodeURIComponent(loc) %>"><%= loc %></a>
+        <% } %>
+      <% } else { %>
+        <span class="text-soft">No locations available yet.</span>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="container">
+    <h2 class="h5 mb-3">How HomiFy works</h2>
+    <div class="row">
+      <div class="col-sm-6 col-lg-3 mb-3">
+        <div class="shell-card p-3"> <div class="fw-bold">01 — Discover</div><div class="text-soft">Explore stays by location and preferences.</div></div>
+      </div>
+      <div class="col-sm-6 col-lg-3 mb-3">
+        <div class="shell-card p-3"> <div class="fw-bold">02 — Compare</div><div class="text-soft">Review price, amenities, and location in one place.</div></div>
+      </div>
+      <div class="col-sm-6 col-lg-3 mb-3">
+        <div class="shell-card p-3"> <div class="fw-bold">03 — Save</div><div class="text-soft">Save interesting places to your wishlist.</div></div>
+      </div>
+      <div class="col-sm-6 col-lg-3 mb-3">
+        <div class="shell-card p-3"> <div class="fw-bold">04 — Choose</div><div class="text-soft">Open the listing details and continue the next steps.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="page-section home-hero-dark">
+<section class="page-section">
   <div class="container">
-    <div class="dark-panel fade-up">
-      <div class="dark-panel-icon"></div>
-      <div class="dark-panel-header">
-        <h1>Homify</h1>
-        <p>A calmer way to discover memorable places to stay.</p>
-      </div>
-
-      <p class="dark-panel-copy">We’re turning the product into something clearer, more trustworthy, and easier to navigate for both guests and hosts.</p>
-
-      <div class="mini-dots" aria-label="Feature highlights">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <div class="dark-panel-links">
-        <div>
-          <span>Explore</span>
-          <a href="/listings">Browse stays</a>
-        </div>
-        <div>
-          <span>Account</span>
-          <a href="/login">Log in</a>
-        </div>
-      </div>
+    <h2 class="h5 mb-3">Why HomiFy</h2>
+    <div class="row">
+      <div class="col-md-4 mb-3"><div class="p-3"><div class="fw-bold">Clearer discovery</div><div class="text-soft">Find relevant stays without unnecessary clutter.</div></div></div>
+      <div class="col-md-4 mb-3"><div class="p-3"><div class="fw-bold">Better comparison</div><div class="text-soft">See the details that matter to compare stays quickly.</div></div></div>
+      <div class="col-md-4 mb-3"><div class="p-3"><div class="fw-bold">Save what interests you</div><div class="text-soft">Keep a shortlist using the wishlist feature.</div></div></div>
     </div>
   </div>
 </section>
+
 
 <section class="page-section" aria-labelledby="why-built-heading">
   <div class="container">

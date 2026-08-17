@@ -18,6 +18,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
 const User = require("./models/user.js");
+const Listing = require("./models/listing.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
@@ -146,8 +147,16 @@ app.get("/health", (req, res) => {
 });
 
 // Routes
-app.get("/", (req, res) => {
-    res.render("home.ejs");
+app.get("/", async (req, res, next) => {
+    try {
+        // Fetch a small set of featured listings (limit 6)
+        const featuredListings = await Listing.find({}).limit(6).lean();
+        // Fetch distinct locations for the "Explore by location" section
+        const locations = await Listing.distinct('location');
+        res.render("home.ejs", { featuredListings, locations });
+    } catch (err) {
+        next(err);
+    }
 });
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
