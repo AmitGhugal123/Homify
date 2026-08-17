@@ -2,196 +2,61 @@
 <% pageTitle = "Home"; %>
 <% layout("layouts/boilerplate") %>
 
-<section class="page-section">
+<section class="page-section page-home-intro">
   <div class="container">
-    <div class="hero-grid">
-      <section class="hero-panel fade-up">
-        <div class="section-kicker">
-          <i class="fa-solid fa-sparkles"></i>
-          Better stays, less noise
-        </div>
-        <div class="hero-copy">
-          <h1 class="hero-title">Find your next stay with more clarity and less clutter.</h1>
-          <p class="hero-subtitle">Homify is being reshaped into a calmer booking experience: clearer discovery, stronger trust signals, and a cleaner path for both guests and hosts.</p>
-        </div>
-
-        <form action="/listings" method="GET" class="hero-search">
-          <div class="hero-search-field">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" name="search" placeholder="Search by city, country, or property mood" value="<%= typeof search !== 'undefined' ? search : '' %>">
-          </div>
-          <button class="btn btn-light px-4" type="submit">
-            <i class="fa-solid fa-arrow-right me-2"></i>Start exploring
-          </button>
-        </form>
-
-        <div class="hero-actions mt-3">
-          <a href="/listings" class="btn btn-light px-4">Browse listings</a>
-          <% if (!currUser) { %>
-            <a href="/signup" class="btn btn-outline-light px-4">Create account</a>
-          <% } else { %>
-            <a href="/listings/new" class="btn btn-outline-light px-4">List your property</a>
-          <% } %>
-        </div>
-
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="fw-bold fs-4">5000+</div>
-            <div class="small text-white-50">Places to compare</div>
-          </div>
-          <div class="hero-stat">
-            <div class="fw-bold fs-4">50K+</div>
-            <div class="small text-white-50">Travelers served</div>
-          </div>
-          <div class="hero-stat">
-            <div class="fw-bold fs-4">4.9/5</div>
-            <div class="small text-white-50">Guest satisfaction target</div>
-          </div>
-        </div>
-      </section>
-
-      <aside class="hero-side-card shell-card fade-up">
-        <div class="hero-highlight">
-          <div class="hero-highlight-image">
-            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Warm and modern interior">
-          </div>
-          <div class="d-flex justify-content-between align-items-start gap-3">
-            <div>
-              <div class="text-soft small mb-1">Featured direction</div>
-              <h2 class="h4 mb-2">A cleaner experience for browsing, saving, and hosting.</h2>
-              <p class="supporting-copy mb-0">Less filler. Better hierarchy. Stronger pricing and trust cues.</p>
-            </div>
-            <span class="icon-chip">
-              <i class="fa-solid fa-house"></i>
-            </span>
-          </div>
-        </div>
-
-        <div class="panel-card">
-          <div class="d-flex align-items-start gap-3">
-            <span class="icon-chip"><i class="fa-solid fa-circle-check"></i></span>
-            <div>
-              <h3 class="h5 mb-2">What we are improving</h3>
-              <p class="supporting-copy mb-0">Stronger page structure, better spacing, fewer distracting effects, and a clearer sense of what matters on each screen.</p>
-            </div>
-          </div>
-        </div>
-      </aside>
+    <div class="intro-copy fade-up">
+      <h1 class="editorial-title">The homepage now points people somewhere useful instead of just decorating the screen.</h1>
+      <p class="editorial-subtitle">This direction keeps the visual energy, but gives the page a stronger purpose: search, browse, compare, and host.</p>
     </div>
   </div>
 </section>
 
-<section class="page-section">
+<section class="page-section home-hero-top">
   <div class="container">
-    <div class="section-heading fade-up">
-      <span class="section-kicker">Why it feels better</span>
-      <h2 class="section-title">The homepage now points people somewhere useful instead of just decorating the screen.</h2>
-      <p class="section-copy">This direction keeps the visual energy, but gives the page a stronger purpose: search, browse, compare, and host.</p>
-    </div>
-
-    <div class="home-metrics-grid">
-      <article class="stat-card fade-up">
-        <div class="metric">
-          <div class="metric-value">150+</div>
-          <div class="metric-label">Countries represented in destination coverage</div>
+    <div class="quote-card fade-up">
+      <div class="quote-card-inner">
+        <div class="quote-text">"It no longer feels like every element is shouting. That alone makes browsing better."</div>
+        <div class="quote-author-row">
+          <div class="quote-avatar">
+            <div class="quote-avatar-inner">🙂</div>
+          </div>
+          <div class="quote-author-meta">
+            <h2>Emma Williams</h2>
+            <p>Remote worker</p>
+          </div>
         </div>
-      </article>
-      <article class="stat-card fade-up">
-        <div class="metric">
-          <div class="metric-value">24/7</div>
-          <div class="metric-label">Support mindset for guests and hosts</div>
-        </div>
-      </article>
-      <article class="stat-card fade-up">
-        <div class="metric">
-          <div class="metric-value">Easy</div>
-          <div class="metric-label">Cleaner listing creation flow for hosts</div>
-        </div>
-      </article>
-      <article class="stat-card fade-up">
-        <div class="metric">
-          <div class="metric-value">Clear</div>
-          <div class="metric-label">Stronger hierarchy for pricing and trust</div>
-        </div>
-      </article>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="page-section">
+<section class="page-section home-hero-dark">
   <div class="container">
-    <div class="section-heading fade-up">
-      <span class="section-kicker">How it works</span>
-      <h2 class="section-title">Three simple steps, now with less visual noise.</h2>
-    </div>
+    <div class="dark-panel fade-up">
+      <div class="dark-panel-icon"></div>
+      <div class="dark-panel-header">
+        <h1>Homify</h1>
+        <p>A calmer way to discover memorable places to stay.</p>
+      </div>
 
-    <div class="benefit-grid">
-      <article class="benefit-card shell-card fade-up">
-        <span class="icon-chip mb-3"><i class="fa-solid fa-search"></i></span>
-        <h3 class="h4">Search with intent</h3>
-        <p class="mb-0">Find places by destination, budget, or the kind of stay you want instead of digging through cluttered cards.</p>
-      </article>
-      <article class="benefit-card shell-card fade-up">
-        <span class="icon-chip mb-3"><i class="fa-solid fa-heart"></i></span>
-        <h3 class="h4">Save what fits</h3>
-        <p class="mb-0">Wishlist the places that match your trip and come back to them quickly without losing context.</p>
-      </article>
-      <article class="benefit-card shell-card fade-up">
-        <span class="icon-chip mb-3"><i class="fa-solid fa-key"></i></span>
-        <h3 class="h4">Book with confidence</h3>
-        <p class="mb-0">Clearer pricing, better host visibility, and more grounded reviews help people commit faster.</p>
-      </article>
-    </div>
-  </div>
-</section>
+      <p class="dark-panel-copy">We’re turning the product into something clearer, more trustworthy, and easier to navigate for both guests and hosts.</p>
 
-<section class="page-section">
-  <div class="container">
-    <div class="section-heading fade-up">
-      <span class="section-kicker">Guest feedback</span>
-      <h2 class="section-title">The experience should feel helpful, not overloaded.</h2>
-    </div>
+      <div class="mini-dots" aria-label="Feature highlights">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
 
-    <div class="testimonial-grid">
-      <article class="testimonial-card shell-card fade-up">
-        <div class="review-stars mb-3">
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+      <div class="dark-panel-links">
+        <div>
+          <span>Explore</span>
+          <a href="/listings">Browse stays</a>
         </div>
-        <p class="mb-0">"I can tell what matters faster now. The search, cards, and pricing all feel easier to trust."</p>
-        <div class="testimonial-meta">
-          <img src="https://api.dicebear.com/7.x/thumbs/svg?seed=sarah" alt="Sarah" class="testimonial-avatar">
-          <div>
-            <div class="fw-bold">Sarah Johnson</div>
-            <div class="text-soft small">Frequent traveler</div>
-          </div>
+        <div>
+          <span>Account</span>
+          <a href="/login">Log in</a>
         </div>
-      </article>
-      <article class="testimonial-card shell-card fade-up">
-        <div class="review-stars mb-3">
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-        </div>
-        <p class="mb-0">"Hosting feels more professional when the platform itself looks organized and intentional."</p>
-        <div class="testimonial-meta">
-          <img src="https://api.dicebear.com/7.x/thumbs/svg?seed=mike" alt="Mike" class="testimonial-avatar">
-          <div>
-            <div class="fw-bold">Mike Chen</div>
-            <div class="text-soft small">Property host</div>
-          </div>
-        </div>
-      </article>
-      <article class="testimonial-card shell-card fade-up">
-        <div class="review-stars mb-3">
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-        </div>
-        <p class="mb-0">"It no longer feels like every element is shouting. That alone makes browsing better."</p>
-        <div class="testimonial-meta">
-          <img src="https://api.dicebear.com/7.x/thumbs/svg?seed=emma" alt="Emma" class="testimonial-avatar">
-          <div>
-            <div class="fw-bold">Emma Williams</div>
-            <div class="text-soft small">Remote worker</div>
-          </div>
-        </div>
-      </article>
+      </div>
     </div>
   </div>
 </section>

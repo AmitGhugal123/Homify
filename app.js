@@ -28,7 +28,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const sessionSecret = process.env.SESSION_SECRET || "dev-fallback-secret-change-me";
 
 // Use your Atlas connection string (stored in .env)
-const dbUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/homify";
+const dbUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/homify_dev";
 
 //  MongoDB connection
 async function main() {
@@ -53,7 +53,7 @@ app.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
-        styleSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net", "fonts.googleapis.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net", "cdnjs.cloudflare.com", "fonts.googleapis.com"],
         fontSrc: ["'self'", "cdnjs.cloudflare.com", "fonts.gstatic.com"],
         imgSrc: ["'self'", "data:", "https:", "via.placeholder.com", "res.cloudinary.com"],
     }

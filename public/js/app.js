@@ -173,6 +173,16 @@
       });
     }
 
+    // keep aria-pressed and label in sync on load
+    if (darkToggle) {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      darkToggle.setAttribute('aria-pressed', String(isDark));
+      const lbl = darkToggle.querySelector('[data-theme-label]');
+      if (lbl) lbl.textContent = isDark ? 'Light mode' : 'Dark mode';
+      const ic = darkToggle.querySelector('i');
+      if (ic) ic.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+
     body.classList.add("app-ready");
   });
 })();

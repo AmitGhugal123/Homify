@@ -1,0 +1,136 @@
+/* HomiFy -- Centralized theme tokens (light + dark)
+   Do not hardcode colors elsewhere; use these tokens via var(--...)
+*/
+:root {
+  /* Brand */
+  --color-brand-deep: #0D3B3E; /* Deep Teal */
+  --color-brand: #147F7D; /* Teal */
+  --color-mint: #7FE3C6; /* Mint */
+
+  /* Accents */
+  --color-coral: #FF6868;
+  --color-amber: #FFC857;
+  --color-lavender: #A788FA;
+
+  /* Neutrals */
+  --color-background: #F7FAF8;
+  --color-surface: #FFFFFF;
+  --color-text: #172827;
+  --color-text-muted: #687A80;
+  --color-border: #DCE7E5;
+
+  /* Shadows & effects */
+  --shadow-sm: 0 8px 18px rgba(21, 34, 36, 0.06);
+  --shadow-md: 0 18px 40px rgba(21, 34, 36, 0.08);
+
+  /* Radii & spacing */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Buttons */
+  --btn-primary-bg: var(--color-brand);
+  --btn-primary-color: #ffffff;
+  --btn-secondary-bg: var(--color-surface);
+  --btn-secondary-color: var(--color-brand);
+  --btn-accent-bg: var(--color-coral);
+  --btn-accent-color: #fff;
+
+  /* Inputs */
+  --input-bg: var(--color-surface);
+  --input-border: var(--color-border);
+  --input-text: var(--color-text);
+  --input-placeholder: #9aa8a5;
+
+  /* Sizes (typography) - recommended */
+  --type-h1: 48px;
+  --type-h2: 32px;
+  --type-h3: 24px;
+  --type-body: 16px;
+  --type-small: 12px;
+}
+
+/* Dark theme tokens */
+html[data-theme="dark"] {
+  --color-brand-deep: #0D3B3E; /* keep brand same */
+  --color-brand: #147F7D;
+  --color-mint: #7FE3C6;
+
+  --color-coral: #FF6868;
+  --color-amber: #FFC857;
+  --color-lavender: #A788FA;
+
+  --color-background: #071A1D;
+  --color-surface: #0D292D;
+  --color-surface-elevated: #12383C;
+  --color-text: #F2F7F5;
+  --color-text-muted: #A5B8B8;
+  --color-border: rgba(127, 227, 198, 0.08);
+
+  --shadow-sm: 0 8px 18px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.55);
+
+  --btn-primary-bg: var(--color-brand);
+  --btn-primary-color: #ffffff;
+  --btn-secondary-bg: var(--color-surface-elevated);
+  --btn-secondary-color: var(--color-mint);
+  --btn-accent-bg: var(--color-coral);
+  --btn-accent-color: #fff;
+
+  --input-bg: var(--color-surface);
+  --input-border: rgba(127, 227, 198, 0.06);
+  --input-text: var(--color-text);
+  --input-placeholder: rgba(242, 247, 245, 0.6);
+}
+
+/* Utility helper classes for immediate use */
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-color);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+  border: 1px solid transparent;
+}
+
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-color);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-brand);
+}
+
+.btn-accent {
+  background: var(--btn-accent-bg);
+  color: var(--btn-accent-color);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.9rem;
+  border: 1px solid transparent;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.input-token {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--input-text);
+  padding: 0.6rem 0.9rem;
+  border-radius: 12px;
+}
+
+/* Typography defaults */
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-size: var(--type-body);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+h1 { font-size: var(--type-h1); }
+h2 { font-size: var(--type-h2); }
+h3 { font-size: var(--type-h3); }

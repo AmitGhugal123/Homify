@@ -1,42 +1,43 @@
+/* Map legacy tokens to centralized theme variables */
 :root {
-  --bg: #f4efe7;
-  --surface: rgba(255, 255, 255, 0.82);
-  --surface-strong: #ffffff;
-  --surface-muted: #f7f3ee;
-  --text: #1f2933;
-  --text-soft: #5d6b79;
-  --border: rgba(31, 41, 51, 0.09);
-  --brand: #176087;
-  --brand-deep: #0d3f5a;
-  --accent: #dd6c3b;
-  --accent-soft: #ffe8db;
-  --success: #228b5a;
-  --danger: #c94343;
-  --warning: #c99018;
-  --shadow-sm: 0 10px 30px rgba(21, 34, 50, 0.08);
-  --shadow-md: 0 18px 50px rgba(21, 34, 50, 0.14);
-  --shadow-lg: 0 28px 80px rgba(21, 34, 50, 0.18);
-  --radius-sm: 14px;
-  --radius-md: 24px;
-  --radius-lg: 36px;
+  --bg: var(--color-background);
+  --surface: var(--color-surface);
+  --surface-strong: var(--color-surface);
+  --surface-muted: color-mix(in srgb, var(--color-surface) 96%, var(--color-background) 4%);
+  --text: var(--color-text);
+  --text-soft: var(--color-text-muted);
+  --border: var(--color-border);
+  --brand: var(--color-brand);
+  --brand-deep: var(--color-brand-deep);
+  --accent: var(--color-coral);
+  --accent-soft: color-mix(in srgb, var(--color-coral) 14%, transparent);
+  --success: var(--color-mint);
+  --danger: var(--color-coral);
+  --warning: var(--color-amber);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: 0 28px 80px color-mix(in srgb, var(--color-text) 18%, transparent);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
   --transition: 220ms ease;
 }
 
 html[data-theme="dark"] {
-  --bg: #10161d;
-  --surface: rgba(21, 28, 37, 0.9);
-  --surface-strong: #17202b;
-  --surface-muted: #202b36;
-  --text: #f4f7fb;
-  --text-soft: #b4c0cd;
-  --border: rgba(255, 255, 255, 0.08);
-  --brand: #5eb0d9;
-  --brand-deep: #9fd7f0;
-  --accent: #ff9c6e;
-  --accent-soft: rgba(255, 156, 110, 0.14);
-  --shadow-sm: 0 12px 30px rgba(0, 0, 0, 0.24);
-  --shadow-md: 0 18px 50px rgba(0, 0, 0, 0.34);
-  --shadow-lg: 0 24px 80px rgba(0, 0, 0, 0.4);
+  --bg: var(--color-background);
+  --surface: var(--color-surface);
+  --surface-strong: var(--color-surface-elevated);
+  --surface-muted: color-mix(in srgb, var(--color-surface-elevated) 60%, var(--color-background) 40%);
+  --text: var(--color-text);
+  --text-soft: var(--color-text-muted);
+  --border: var(--color-border);
+  --brand: var(--color-brand);
+  --brand-deep: var(--color-brand-deep);
+  --accent: var(--color-coral);
+  --accent-soft: color-mix(in srgb, var(--color-coral) 14%, transparent);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: 0 24px 80px color-mix(in srgb, var(--color-text) 40%, transparent);
 }
 
 *,
@@ -55,9 +56,9 @@ body {
   font-family: "Montserrat", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(23, 96, 135, 0.12), transparent 34%),
-    radial-gradient(circle at top right, rgba(221, 108, 59, 0.12), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--color-brand) 12%, transparent 88%), transparent 34%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--color-amber) 12%, transparent 88%), transparent 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--color-surface) 14%, transparent 86%), transparent),
     var(--bg);
   line-height: 1.6;
 }
@@ -160,26 +161,26 @@ textarea {
 
 .btn-primary {
   background: linear-gradient(135deg, var(--brand), var(--brand-deep));
-  color: #fff;
-  box-shadow: 0 12px 24px rgba(23, 96, 135, 0.25);
+  color: var(--btn-primary-color);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--color-brand) 25%, transparent);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
   background: linear-gradient(135deg, var(--brand), var(--brand-deep));
-  color: #fff;
+  color: var(--btn-primary-color);
 }
 
 .btn-outline-primary {
-  border-color: rgba(23, 96, 135, 0.28);
+  border-color: color-mix(in srgb, var(--color-brand) 28%, transparent);
   color: var(--brand);
-  background: rgba(255, 255, 255, 0.5);
+  background: color-mix(in srgb, var(--color-surface) 50%, transparent);
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:focus {
   border-color: var(--brand);
-  background: rgba(23, 96, 135, 0.08);
+  background: color-mix(in srgb, var(--color-brand) 8%, transparent);
   color: var(--brand);
 }
 
@@ -200,7 +201,7 @@ textarea {
 .input-group-text {
   border-radius: 16px !important;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.72);
+  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
   color: var(--text);
   box-shadow: none;
 }
@@ -213,8 +214,8 @@ textarea {
 .form-control:focus,
 .form-select:focus {
   background: var(--surface-strong);
-  border-color: rgba(23, 96, 135, 0.34);
-  box-shadow: 0 0 0 0.24rem rgba(23, 96, 135, 0.12);
+  border-color: color-mix(in srgb, var(--color-brand) 34%, transparent);
+  box-shadow: 0 0 0 0.24rem color-mix(in srgb, var(--color-brand) 12%, transparent);
   color: var(--text);
 }
 
@@ -229,13 +230,13 @@ textarea {
 }
 
 .alert-success {
-  background: rgba(34, 139, 90, 0.12);
-  color: #145639;
+  background: color-mix(in srgb, var(--color-mint) 12%, transparent);
+  color: var(--color-brand-deep);
 }
 
 .alert-danger {
-  background: rgba(201, 67, 67, 0.12);
-  color: #7c2525;
+  background: color-mix(in srgb, var(--color-coral) 12%, transparent);
+  color: var(--color-coral);
 }
 
 .badge {
@@ -287,9 +288,9 @@ textarea {
   padding: 2.25rem;
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.22), transparent 38%),
-    linear-gradient(135deg, #0f5d86, #163348 60%, #dd6c3b);
-  color: #fff;
+    radial-gradient(circle at top left, color-mix(in srgb, var(--color-surface) 22%, transparent 78%), transparent 38%),
+    linear-gradient(135deg, var(--color-brand), var(--color-brand-deep) 60%, color-mix(in srgb, var(--color-amber) 20%, transparent 80%));
+  color: var(--btn-primary-color);
   box-shadow: var(--shadow-md);
 }
 
@@ -328,7 +329,7 @@ textarea {
   border-radius: 18px;
   display: inline-grid;
   place-items: center;
-  background: rgba(23, 96, 135, 0.12);
+  background: color-mix(in srgb, var(--color-brand) 12%, transparent);
   color: var(--brand);
 }
 

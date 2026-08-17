@@ -4,20 +4,20 @@
   z-index: 1030;
   padding: 1rem 0;
   transition: background-color 220ms ease, box-shadow 220ms ease, backdrop-filter 220ms ease, border-color 220ms ease;
-  background: rgba(244, 239, 231, 0.72);
-  backdrop-filter: blur(12px);
+  background: var(--color-surface);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid transparent;
 }
 
 .site-navbar.is-scrolled {
-  background: rgba(244, 239, 231, 0.92);
-  border-color: var(--border);
+  background: color-mix(in srgb, var(--color-surface) 88%, var(--color-background) 12%);
+  border-color: var(--color-border);
   box-shadow: var(--shadow-sm);
 }
 
 html[data-theme="dark"] .site-navbar,
 html[data-theme="dark"] .site-navbar.is-scrolled {
-  background: rgba(16, 22, 29, 0.88);
+  background: color-mix(in srgb, var(--color-surface-elevated) 88%, var(--color-background) 12%);
 }
 
 .navbar-brand-mark {
@@ -26,9 +26,9 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   display: grid;
   place-items: center;
   border-radius: 18px;
-  background: linear-gradient(135deg, var(--brand), var(--accent));
-  color: #fff;
-  box-shadow: 0 12px 24px rgba(23, 96, 135, 0.2);
+  background: linear-gradient(135deg, var(--color-brand), var(--color-amber));
+  color: var(--btn-primary-color);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--color-brand) 20%, transparent);
 }
 
 .navbar-brand-copy {
@@ -110,7 +110,7 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   min-width: min(100%, 320px);
   padding: 0.4rem 0.5rem 0.4rem 1rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.84);
+  background: color-mix(in srgb, var(--color-surface) 84%, transparent);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
 }
@@ -131,8 +131,8 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   border: 0;
   display: grid;
   place-items: center;
-  color: #fff;
-  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+  color: var(--btn-primary-color);
+  background: linear-gradient(135deg, var(--color-brand), var(--color-brand-deep));
 }
 
 .nav-wishlist-badge {
@@ -146,14 +146,16 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
 }
 
 .site-footer {
+  /* Make footer theme-aware: default to light/surface + dark text in light mode */
   position: relative;
   overflow: hidden;
   margin-top: 4rem;
   padding: 4rem 0 2rem;
-  color: #eef4f8;
-  background: linear-gradient(135deg, #0c2635, #143347 56%, #1b516f);
+  background: var(--color-surface);
+  color: var(--color-text);
 }
-
+ 
+/* Decorative shapes stay subtle and behind content */
 .site-footer::before {
   content: "";
   position: absolute;
@@ -161,9 +163,10 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   width: 240px;
   height: 240px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--color-surface) 6%, transparent);
+  z-index: 0;
 }
-
+ 
 .site-footer::after {
   content: "";
   position: absolute;
@@ -171,31 +174,79 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background: rgba(221, 108, 59, 0.16);
+  background: color-mix(in srgb, var(--color-amber) 16%, transparent 84%);
+  z-index: 0;
 }
-
+ 
+/* Links and text inside footer should be theme-aware */
 .site-footer a {
-  color: rgba(238, 244, 248, 0.82);
+  color: var(--color-text);
 }
-
+ 
 .site-footer a:hover {
-  color: #fff;
+  color: var(--color-brand);
 }
-
+ 
+/* Replace Bootstrap's text-white-50 inside footer with a readable muted token */
+.site-footer .text-white-50,
+.site-footer .text-white-75 {
+  color: var(--color-text-muted) !important;
+}
+ 
 .footer-panel {
   position: relative;
   z-index: 1;
 }
-
+ 
 .footer-brand-mark {
   width: 3rem;
   height: 3rem;
   display: grid;
   place-items: center;
   border-radius: 20px;
-  color: #fff;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(221, 108, 59, 0.28));
+  color: var(--color-brand-deep); /* dark icon color on light footer */
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-surface) 18%, transparent), color-mix(in srgb, var(--color-amber) 28%, transparent 72%));
 }
+html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
+ 
+/* Titles and headings in footer */
+.footer-title {
+  color: var(--color-brand-deep);
+}
+ 
+/* Footer socials */
+.footer-social {
+  background: color-mix(in srgb, var(--color-surface) 8%, transparent);
+  color: var(--color-text-muted);
+}
+.footer-social:hover {
+  color: var(--color-brand);
+}
+ 
+/* Footer metric descriptions */
+.footer-metric {
+  background: color-mix(in srgb, var(--color-surface) 8%, transparent);
+}
+.footer-metric .fw-bold { color: var(--color-text); }
+.footer-metric .text-white-50 { color: var(--color-text-muted) !important; }
+ 
+/* Make Bootstrap's text-muted inside footer use theme token */
+.site-footer .text-muted { color: var(--color-text-muted) !important; }
+/* Back to top button should use accent color */
+.back-to-top {
+  background: linear-gradient(135deg, var(--color-coral), color-mix(in srgb, var(--color-amber) 40%, transparent 60%));
+  color: var(--btn-primary-color);
+}
+ 
+/* Dark theme: make footer intentionally dark */
+html[data-theme="dark"] .site-footer {
+  background: linear-gradient(135deg, var(--color-brand-deep), color-mix(in srgb, var(--color-brand-deep) 60%, var(--color-surface-elevated) 40%));
+  color: var(--color-text);
+}
+html[data-theme="dark"] .site-footer a { color: var(--color-text); }
+html[data-theme="dark"] .site-footer a:hover { color: var(--color-mint); }
+html[data-theme="dark"] .site-footer .text-white-50 { color: var(--color-text-muted) !important; }
+html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
 
 .footer-title {
   font-size: 0.82rem;
@@ -251,8 +302,8 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, var(--accent), #f08d58);
-  color: #fff;
+  background: linear-gradient(135deg, var(--color-coral), color-mix(in srgb, var(--color-amber) 40%, transparent 60%));
+  color: var(--btn-primary-color);
   box-shadow: var(--shadow-md);
   opacity: 0;
   pointer-events: none;
