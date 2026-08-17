@@ -1,6 +1,9 @@
 <% pageClass = "page-home"; %>
 <% pageTitle = "Home"; %>
 <% layout("layouts/boilerplate") %>
+<% // Provide safe defaults when rendering without controller-provided data %>
+<% var featuredListings = typeof featuredListings !== 'undefined' ? featuredListings : []; %>
+<% var locations = typeof locations !== 'undefined' ? locations : []; %>
 
 <section class="page-hero page-section">
   <div class="container">
