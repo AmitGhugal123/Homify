@@ -27,6 +27,14 @@
         } catch(e) { /* ignore */ }
       })();
     </script>
+    <script>
+      // Expose minimal current user info for client scripts (only _id)
+      try {
+        window.__CURRENT_USER = <%= JSON.stringify((typeof currUser !== 'undefined' && currUser) ? String(currUser._id) : null) %>;
+      } catch(e) {
+        window.__CURRENT_USER = null;
+      }
+    </script>
 </head>
 
 <body class="<%= typeof pageClass !== 'undefined' ? pageClass : '' %>">

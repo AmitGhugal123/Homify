@@ -153,7 +153,15 @@ app.get("/", async (req, res, next) => {
         const featuredListings = await Listing.find({}).limit(6).lean();
         // Fetch distinct locations for the "Explore by location" section
         const locations = await Listing.distinct('location');
-        res.render("home.ejs", { featuredListings, locations });
+
+        // If user logged in, fetch their wishlist ids so featured cards can render correctly
+        let wishlistIds = [];
+        if (req.user) {
+            const user = await User.findById(req.user._id).select('wishlist').lean();
+            if (user && Array.isArray(user.wishlist)) wishlistIds = user.wishlist.map(id => String(id));
+        }
+
+        res.render("home.ejs", { featuredListings, locations, wishlistIds });
     } catch (err) {
         next(err);
     }

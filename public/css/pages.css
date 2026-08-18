@@ -798,3 +798,29 @@
     align-items: flex-start;
   }
 }
+
+/* Ensure author card emphasis adapts to theme on home page */
+.page-home .card .fw-bold,
+.page-home .card h3.h6 {
+  color: var(--color-text);
+  background: transparent;
+}
+
+/* Make any inline highlights inside the author card readable in both themes */
+.page-home .card .inline-highlight {
+  background: color-mix(in srgb, var(--btn-primary-bg) 85%, transparent);
+  color: var(--btn-primary-color);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+}
+
+html[data-theme="dark"] .page-home .card .inline-highlight {
+  /* In dark mode prefer lighter foreground if background is saturated */
+  color: var(--btn-primary-color);
+}
+
+html[data-theme="light"] .page-home .card .inline-highlight {
+  /* In light mode ensure contrast by using the brand color for text */
+  color: var(--color-text);
+}
+

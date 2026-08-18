@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const User = require("../models/user");
 const ExpressError = require("../utils/ExpressError");
 const { cloudinary } = require("../utils/cloudConfig");
 
@@ -32,9 +33,16 @@ module.exports.index = async (req, res) => {
         }
     }
 
-    const allListings = await Listing.find(query);
+    const allListings = await Listing.find(query).lean();
 
-    res.render("listings/index.ejs", { allListings, search });
+    // Determine wishlist ids for the current user (if logged in)
+    let wishlistIds = [];
+    if (req.user) {
+        const user = await User.findById(req.user._id).select('wishlist').lean();
+        if (user && Array.isArray(user.wishlist)) wishlistIds = user.wishlist.map(id => String(id));
+    }
+
+    res.render("listings/index.ejs", { allListings, search, wishlistIds });
 };
 
 // New Route

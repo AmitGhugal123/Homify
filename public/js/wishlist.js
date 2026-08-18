@@ -99,9 +99,27 @@ class WishlistManager {
 
 let wishlistManager;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   wishlistManager = new WishlistManager();
   window.wishlistManager = wishlistManager;
+
+  // If user is logged in, try to sync with server wishlist
+  try {
+    if (window.__CURRENT_USER) {
+      const resp = await fetch('/wishlist/user');
+      if (resp.ok) {
+        const serverIds = await resp.json();
+        if (Array.isArray(serverIds)) {
+          wishlistManager.wishlist = serverIds;
+          wishlistManager.saveWishlist();
+          wishlistManager.initializeWishlistButtons();
+        }
+      }
+    }
+  } catch (e) {
+    // Fail silently - localStorage fallback remains
+    console.error('Wishlist sync failed', e);
+  }
 });
 
 window.addEventListener("storage", () => {
@@ -110,3 +128,61 @@ window.addEventListener("storage", () => {
   wishlistManager.initializeWishlistButtons();
   wishlistManager.updateWishlistBadge();
 });
+
+// Override add/remove to call server endpoints when logged-in
+const origAdd = WishlistManager.prototype.addToWishlist;
+const origRemove = WishlistManager.prototype.removeFromWishlist;
+
+WishlistManager.prototype.addToWishlist = function(listingId) {
+  if (window.__CURRENT_USER) {
+    // optimistic UI: update local UI, then persist
+    if (!this.isInWishlist(listingId)) {
+      origAdd.call(this, listingId);
+      fetch(`/wishlist/add/${listingId}`, { method: 'POST', headers: { 'Content-Type': 'application/json' } })
+        .then(r => r.json())
+        .then(data => {
+          if (!data.success) {
+            // revert
+            this.removeFromWishlist(listingId);
+            this.showNotification('Failed to add to wishlist', 'danger');
+          } else if (Array.isArray(data.wishlist)) {
+            this.wishlist = data.wishlist;
+            this.saveWishlist();
+            this.initializeWishlistButtons();
+          }
+        }).catch(() => {
+          this.removeFromWishlist(listingId);
+          this.showNotification('Failed to add to wishlist', 'danger');
+        });
+    }
+  } else {
+    origAdd.call(this, listingId);
+  }
+};
+
+WishlistManager.prototype.removeFromWishlist = function(listingId) {
+  if (window.__CURRENT_USER) {
+    if (this.isInWishlist(listingId)) {
+      // optimistic UI
+      origRemove.call(this, listingId);
+      fetch(`/wishlist/remove/${listingId}`, { method: 'POST', headers: { 'Content-Type': 'application/json' } })
+        .then(r => r.json())
+        .then(data => {
+          if (!data.success) {
+            // revert
+            origAdd.call(this, listingId);
+            this.showNotification('Failed to remove from wishlist', 'danger');
+          } else if (Array.isArray(data.wishlist)) {
+            this.wishlist = data.wishlist;
+            this.saveWishlist();
+            this.initializeWishlistButtons();
+          }
+        }).catch(() => {
+          origAdd.call(this, listingId);
+          this.showNotification('Failed to remove from wishlist', 'danger');
+        });
+    }
+  } else {
+    origRemove.call(this, listingId);
+  }
+};
