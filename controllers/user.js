@@ -21,9 +21,6 @@ module.exports.signup = async (req, res, next) => {
         const newUser = new User({ email, username });
         const registeredUser = await User.register(newUser, password);
 
-        // Optional: log the registered user
-        console.log(registeredUser);
-
         // Automatically login after signup
         req.login(registeredUser, (err) => {
             if (err) return next(err);
@@ -31,8 +28,29 @@ module.exports.signup = async (req, res, next) => {
             res.redirect("/listings");
         });
     } catch (e) {
-        req.flash("error", e.message);
-        res.redirect("/signup");
+        // Map common registration errors to friendly messages and avoid leaking raw DB or plugin internals
+        let msg = "An error occurred during registration. Please try again.";
+        if (e) {
+            // passport-local-mongoose UserExistsError
+            if (e.name === "UserExistsError") {
+                msg = "An account with this email already exists.";
+            }
+            // Mongo duplicate key error
+            else if (e.code && e.code === 11000) {
+                msg = "An account with this email already exists.";
+            }
+            // Fallback to plugin message if it's harmless
+            else if (typeof e.message === 'string') {
+                // Avoid exposing raw Mongo messages — normalize username/email wording
+                if (e.message.toLowerCase().includes('username')) {
+                    msg = "An account with this email already exists.";
+                } else {
+                    msg = e.message;
+                }
+            }
+        }
+        req.flash("error", msg);
+        return res.redirect("/signup");
     }
 };
 
