@@ -29,14 +29,14 @@
             <span class="detail-avatar"><i class="fa-solid fa-user"></i></span>
             <div>
               <div class="text-soft small">Hosted by</div>
-              <div class="fw-bold"><%= listing.owner.username %></div>
+             <div class="fw-bold"><%= listing.owner ? listing.owner.username : 'Host' %></div>
               <div class="text-soft small">Verified host profile</div>
             </div>
           </div>
 
           <div class="d-grid gap-2">
             <a href="/listings" class="btn btn-outline-secondary">Back to listings</a>
-            <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+            <% if (currUser && listing.owner && currUser._id.equals(listing.owner._id)) { %>
               <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary">Edit listing</a>
               <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="m-0">
                 <button type="submit" class="btn btn-outline-secondary w-100" onclick="return confirm('Delete this listing?');">Delete listing</button>
@@ -75,7 +75,7 @@
             </div>
             <div class="fact-tile">
               <div class="text-soft small mb-1">Hosting</div>
-              <div class="fw-bold">Managed by <%= listing.owner.username %></div>
+              <div class="fw-bold">Managed by <%= listing.owner ? listing.owner.username : 'Host' %></div>
             </div>
           </div>
         </article>
@@ -127,10 +127,10 @@
                 <article class="review-card">
                   <div class="review-header mb-2">
                     <div>
-                      <div class="fw-bold">@<%= review.author.username %></div>
+                      <div class="fw-bold">@<%= review.author ? review.author.username : 'guest' %></div>
                       <div class="text-soft small"><%= new Date(review.createdAt).toLocaleDateString('en-IN') %></div>
                     </div>
-                    <% if (currUser && currUser._id.equals(review.author._id)) { %>
+                    <% if (currUser && review.author && currUser._id.equals(review.author._id)) { %>
                       <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
                         <button class="btn btn-sm btn-outline-secondary" type="submit">Remove</button>
                       </form>
