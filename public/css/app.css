@@ -213,6 +213,20 @@ textarea {
   padding: 0.85rem 1rem;
 }
 
+.page-hero-panel .hero-search-input {
+  color: var(--btn-primary-color);
+  caret-color: var(--btn-primary-color);
+}
+
+.page-hero-panel .hero-search-input::placeholder {
+  color: color-mix(in srgb, var(--btn-primary-color) 72%, transparent);
+  opacity: 1;
+}
+
+html:not([data-theme="dark"]) .page-hero-panel .hero-subtitle-light {
+  color: #ffffff;
+}
+
 .form-control:focus,
 .form-select:focus {
   background: var(--surface-strong);

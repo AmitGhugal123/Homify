@@ -51,21 +51,7 @@
             <span id="wishlistCount">0</span>
           </span>
         </a>
-        <button class="nav-control border-0 bg-transparent" type="button" data-theme-toggle aria-label="Toggle theme" aria-pressed="false">
-          <i class="fa-solid fa-moon"></i>
-          <span data-theme-label>Dark mode</span>
-        </button>
-
-        <% if (!currUser) { %>
-          <a class="nav-link" href="/login">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <span>Log in</span>
-          </a>
-          <a class="nav-link" href="/signup">
-            <i class="fa-solid fa-user-plus"></i>
-            <span>Sign up</span>
-          </a>
-        <% } else { %>
+        <% if (currUser) { %>
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa-solid fa-user-circle"></i>
@@ -83,6 +69,34 @@
             </ul>
           </div>
         <% } %>
+      </div>
+
+      <div class="dropdown nav-utility-menu">
+        <button class="nav-utility-trigger" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Open more options">
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end nav-utility-list">
+          <li>
+            <button class="dropdown-item" type="button" data-theme-toggle aria-label="Toggle theme" aria-pressed="false">
+              <i class="fa-solid fa-moon" aria-hidden="true"></i>
+              <span data-theme-label>Dark mode</span>
+            </button>
+          </li>
+          <% if (!currUser) { %>
+            <li>
+              <a class="dropdown-item" href="/login">
+                <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                <span>Log in</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/signup">
+                <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+                <span>Sign up</span>
+              </a>
+            </li>
+          <% } %>
+        </ul>
       </div>
     </div>
   </div>

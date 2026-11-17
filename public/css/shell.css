@@ -15,6 +15,11 @@
   padding-left: 24px;
   padding-right: 24px;
 }
+
+.site-navbar .navbar-brand {
+  min-width: 0;
+  flex: 0 1 auto;
+}
 /* Ensure overall page container respects max width and padding */
 .site-container {
   width: 100%;
@@ -76,6 +81,7 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
 
 .site-navbar .navbar-collapse {
   gap: 1rem;
+  min-width: 0;
 }
 /* Make nav items occupy only their content width and keep layout stable */
 .site-navbar .navbar-nav { display: flex; align-items: center; gap: 0.5rem; flex: 0 0 auto; }
@@ -127,6 +133,46 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   color: var(--brand);
 }
 
+.nav-utility-menu {
+  flex: 0 0 auto;
+  margin-left: 0.25rem;
+}
+
+.nav-utility-trigger {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  transition: background-color 220ms ease, color 220ms ease, transform 220ms ease;
+}
+
+.nav-utility-trigger:hover,
+.nav-utility-trigger:focus-visible {
+  background: var(--accent-soft);
+  color: var(--brand);
+  transform: translateY(-1px);
+}
+
+.nav-utility-list {
+  min-width: 11rem;
+  margin-top: 0.5rem !important;
+}
+
+.nav-utility-list .dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.nav-utility-list .dropdown-item i {
+  width: 1rem;
+  text-align: center;
+}
+
 .site-search {
   display: flex;
   align-items: center;
@@ -149,7 +195,13 @@ html[data-theme="dark"] .site-navbar.is-scrolled {
   border: 0;
   outline: none;
   background: transparent;
-  color: var(--text);
+  color: var(--input-text);
+  caret-color: var(--input-text);
+}
+
+.site-search input::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1;
 }
 
 .site-search button {
@@ -371,7 +423,22 @@ html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
 }
 
 @media (max-width: 991px) {
+  .site-navbar {
+    height: auto;
+  }
+
+  .site-navbar > .container {
+    flex-wrap: wrap;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .site-navbar .navbar-brand {
+    margin-right: auto;
+  }
+
   .site-navbar .navbar-collapse {
+    flex-basis: 100%;
     margin-top: 1rem;
     padding: 1rem;
     border-radius: 24px;
@@ -382,6 +449,20 @@ html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
 
   .site-search {
     min-width: 100%;
+    max-width: none;
+    margin: 0 0 0.75rem !important;
+  }
+
+  .site-navbar .navbar-nav {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .site-navbar .nav-link,
+  .site-navbar .nav-control {
+    justify-content: flex-start;
+    width: 100%;
   }
 
   .footer-metrics {
@@ -390,4 +471,34 @@ html[data-theme="dark"] .footer-brand-mark { color: var(--btn-primary-color); }
 
   .navbar-toggler { min-width: 44px; min-height: 44px; padding: 0.45rem; border-radius: 8px; }
   .navbar-toggler-icon { width: 20px; height: 14px; }
+}
+
+@media (max-width: 575px) {
+  .site-navbar > .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .navbar-brand-copy {
+    display: none;
+  }
+
+  .site-navbar .navbar-collapse {
+    padding: 0.75rem;
+    border-radius: 18px;
+  }
+
+  .site-search {
+    padding: 0.3rem 0.45rem;
+  }
+
+  .site-search button {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .site-footer .footer-panel {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
